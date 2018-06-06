@@ -1,3 +1,45 @@
+  <style type="text/css">
+      /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        margin-left: 30%;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+  </style>
+
+
         <!-- page heading start-->
         <div id="content">
             <div id="content-header">
@@ -55,8 +97,6 @@
                                                 <!--<th style="background: #dedeec; font-size: 12px" width="85">Foto</th>-->
                                                 <th style="background: #dedeec; font-size: 12px" width="5%">Title</th>
                                                 <th style="background: #dedeec; font-size: 12px" width="20%">Alamat Perusahaan</th>
-                                                <th style="background: #dedeec; font-size: 12px" width="10%">Latitude</th>
-                                                <th style="background: #dedeec; font-size: 12px" width="10%">Longitude</th>
                                                 <th style="background: #dedeec; font-size: 12px" width="10%">Hari & Jam Kerja</th>
                                                 <th style="background: #dedeec; font-size: 12px" width="10%">QR Code</th>
                                                 <th style="background: #dedeec; font-size: 12px" width="7%">Aksi</th>
@@ -69,31 +109,25 @@
                                                 <td data-title="nama perusahaan"><strong><?php echo $p['lokasi_nama']; ?></strong></td>
                                                 <td data-title="No. HP"><?php echo $p['perusahaan_title']; ?></td>
                                                 <td data-title="Alamat"><?php echo $p['perusahaan_alamat'] ?></td>
-                                                <td data-title="Koordinat"><?php echo $p['latitude'] ?></td>
-                                                <td data-title="Koordinat"><?php echo $p['longitude'] ?></td>
                                                 <td>
-                                                    <!-- <span class="btn btn-primary"><a href="<?php //echo base_url('mastercms/perusahaan/add_jam_kerja/'.$value['lokasi_id']); ?>" title="Detail" style="color: white">Tambah Jam Kerja</a></span> -->
+                                                    <span class="btn btn-primary"><a href="<?php echo base_url('mastercms/perusahaan/add_jam_kerja/'.$p['lokasi_id']); ?>" title="Detail" style="color: white">Add / Edit</a></span>
+                                                    <!-- <span class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="myBtn">View</span> -->
+                                                    <button id="myBtn">View</button>
 
-                                                    <table>
+                                                    <!-- Modal Jam Kerja -->
 
-                                                        <?php foreach ($jam_kerja as $key => $j) : ?>
-                                                            <?php if ($p['lokasi_id'] == $j['lokasi_id']): ?>
-                                                                <?php $nilai = "ada"; ?>
-                                                                <tr>
-                                                                    
-                                                                    <td><?php echo $j['kerja_hari']; ?></td>
-                                                                    <td title="Jam Masuk"><?php echo $j['jam_masuk']; ?></td>
-                                                                    <td>-</td>
-                                                                    <td title="Jam Selesai"><?php echo $j['jam_keluar']; ?></td>
-                                                                    
-                                                                </tr>
-                                                            <?php elseif ($p['lokasi_id'] != $j['lokasi_id']) : $nilai = "tidak ada"; ?>
-                                                            <?php endif ?>
-                                                        <?php endforeach ?>
-                                                        <?php if ($nilai=="tidak ada") {
-                                                            echo " Tombol Tambah Jam";
-                                                        } ?>
-                                                    </table>
+                                                    <!-- The Modal -->
+                                                    <div id="myModal" class="modal">
+
+                                                      <!-- Modal content -->
+                                                        <div class="modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <p>Some text in the Modal..</p>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <!-- Modal Jam Kerja -->
 
                                                 </td>
                                                 <td><img style="width: 150px;" src="<?php echo base_url('assets/images/qrcode/').$p['qr_code'];?>"></td>
@@ -119,3 +153,35 @@
             </div>
 
         </div>
+
+
+
+
+
+<script type="text/javascript">
+        // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
